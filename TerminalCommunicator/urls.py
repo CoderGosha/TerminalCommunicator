@@ -13,9 +13,30 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path
+from django.views.generic import TemplateView
+from rest_framework import schemas, permissions
+from rest_framework.schemas import get_schema_view, openapi
+from rest_framework_swagger.renderers import SwaggerUIRenderer, OpenAPIRenderer
+
+from Communicator.api.views.ApiView import ApiView
+from Communicator.views import PingView
+
+app_name = "Communicator"
+
+from rest_framework.schemas import get_schema_view
+
+from rest_framework.renderers import CoreJSONRenderer
+
 
 urlpatterns = [
+    path('swagger-ui/', TemplateView.as_view(
+        template_name='swagger-ui.html',
+        extra_context={'schema_url': 'openapi-schema'}
+    ), name='swagger-ui'),
+    path('swagger/', ApiView.as_view()),
+    path('ping/', PingView.as_view()),
     path('admin/', admin.site.urls),
 ]
