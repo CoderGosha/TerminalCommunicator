@@ -1,0 +1,2 @@
+C:\Users\CoderGosha\AppData\Local\Programs\Python\Python39\python.exe manage.py makemigrations Communicator
+C:\Users\CoderGosha\AppData\Local\Programs\Python\Python39\python.exe manage.py migrate Communicator
