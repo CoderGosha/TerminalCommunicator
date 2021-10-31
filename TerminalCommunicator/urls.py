@@ -31,6 +31,7 @@ from rest_framework.schemas import get_schema_view
 from rest_framework.renderers import CoreJSONRenderer
 schema_view = get_swagger_view(title='TerminalCommunicator')
 
+
 urlpatterns = [
     path('swagger/', TemplateView.as_view(
         template_name='swagger-ui.html',
@@ -45,5 +46,5 @@ urlpatterns = [
     path('api/ping/', PingView.as_view()),
     path('admin/', admin.site.urls),
     url(r'^$', schema_view),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 ]

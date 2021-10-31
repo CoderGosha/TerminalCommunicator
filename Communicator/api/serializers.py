@@ -4,7 +4,7 @@ from Communicator.models import Terminal
 
 
 class PingSerializer(serializers.ModelSerializer):
-    owner = serializers.ReadOnlyField(source='owner.username')
+    # owner = serializers.ReadOnlyField(source='owner.username')
 
     class Meta:
         model = Terminal

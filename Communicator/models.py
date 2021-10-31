@@ -12,6 +12,7 @@ class Terminal(models.Model):
     count_request = models.IntegerField(default=0)
     owner = models.ForeignKey('auth.User', related_name='terminals', on_delete=models.CASCADE,
                               default=1)
+    metric = models.IntegerField(default=0)
 
     def __str__(self):
         return f'{self.name} ({self.id}) -{self.ip_address or "no connect"}'
