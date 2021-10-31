@@ -8,6 +8,9 @@ from Communicator.api.serializers import PingSerializer
 
 
 class PingView(APIView):
+    def get(self, request):
+        return Response({"Ok"})
+
     def post(self, request):
         ping = request.data.get('ping')
         serializer = PingSerializer(data=ping)
