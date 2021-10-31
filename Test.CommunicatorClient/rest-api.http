@@ -1,13 +1,24 @@
-GET http://localhost:8000/api/token?name=test1
-Accept: application/json
-Authorization: Token {{token}}
-
 ###
-GET http://localhost:8000/api/ping
+GET http://localhost:8000/api/ping/
 Accept: */*
 Cache-Control: no-cache
 Authorization: Token {{token}}
+
 ###
 
+POST http://localhost:8000/api/ping/
+Authorization: Token {{token}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name":
+  "test1"
+}
+
+###
+GET http://localhost:8000/api/token?name=test1
+Accept: application/json
+Authorization: Token {{token}}
 
 
