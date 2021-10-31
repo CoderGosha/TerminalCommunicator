@@ -15,12 +15,13 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from django.views.generic import TemplateView
 from rest_framework import schemas, permissions
 from rest_framework.schemas import get_schema_view, openapi
 from rest_framework_swagger.renderers import SwaggerUIRenderer, OpenAPIRenderer
-
+from rest_framework_swagger.views import get_swagger_view
+from rest_framework.schemas.coreapi import AutoSchema
 from Communicator.views import PingView
 
 app_name = "Communicator"
@@ -28,12 +29,14 @@ app_name = "Communicator"
 from rest_framework.schemas import get_schema_view
 
 from rest_framework.renderers import CoreJSONRenderer
+schema_view = get_swagger_view(title='TerminalCommunicator')
 
 urlpatterns = [
-    path('swagger-ui/', TemplateView.as_view(
+    path('swagger/', TemplateView.as_view(
         template_name='swagger-ui.html',
         extra_context={'schema_url': 'openapi-schema'}
     ), name='openapi-schema'),
+
     path('openapi/', get_schema_view(
         title="TerminalCommunicator",
         description="API",
@@ -41,4 +44,6 @@ urlpatterns = [
     ), name='openapi-schema'),
     path('api/ping/', PingView.as_view()),
     path('admin/', admin.site.urls),
+    url(r'^$', schema_view),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
