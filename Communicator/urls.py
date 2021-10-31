@@ -1,16 +1,15 @@
 from django.conf.urls import url
 from django.urls import path
+from django.views.generic import TemplateView
 from rest_framework.schemas import get_schema_view
 from rest_framework_swagger.renderers import SwaggerUIRenderer, OpenAPIRenderer
 
-from Communicator.views import PingView
+from Communicator.views import PingView, TokenView
 
 app_name = "Communicator"
 
-schema_view = get_schema_view(title='Users API', renderer_classes=[OpenAPIRenderer, SwaggerUIRenderer])
-
-
 # app_name will help us do a reverse look-up latter.
 urlpatterns = [
-
+    path('ping/', PingView.as_view()),
+    path('token/', TokenView.as_view())
 ]

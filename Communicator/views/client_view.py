@@ -13,8 +13,9 @@ from Communicator.api.serializers import PingSerializer
 
 
 class PingView(APIView):
+
     authentication_classes = [TokenAuthentication, SessionAuthentication]
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     def get(self, request):
         return Response({"Ok"})
