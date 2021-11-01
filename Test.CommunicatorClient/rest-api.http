@@ -13,11 +13,11 @@ Content-Type: application/json
 
 {
   "name":
-  "test1"
+  "Terminal1"
 }
 
 ###
-GET http://localhost:8000/api/token?name=test1
+GET http://localhost:8000/api/token?name=UserTest
 Accept: application/json
 Authorization: Token {{token}}
 
