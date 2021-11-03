@@ -29,6 +29,10 @@ class TerminalWorker:
         while True:
             try:
                 self.ping()
+                messages = self.get_event()
+                for message in messages:
+                    self.processing_message(message)
+
             except Exception as ex:
                 self.increment_error()
                 logging.error(ex)
@@ -63,3 +67,42 @@ class TerminalWorker:
         if self.error_count > 50:
             self.timeout = self.timeout_long
 
+    def get_event(self):
+        result = requests.get(self.api_url + "api/event", headers={'Authorization': f'Token {self.api_key}'},
+                              params={"name": self.name})
+        if result.status_code == 200:
+            return result.json()
+        else:
+            self.increment_error()
+            msg = f"Code: {result.status_code}, {result.text}"
+            logging.info(msg)
+
+    def processing_message(self, message):
+        logging.info(f"Processing message: {message}")
+        id = message["id"]
+        request = message["request"]
+        success = True
+        response = None
+
+        if message["event_type"] == 0:
+            response, success = self.processing_event_get(request)
+        else:
+            logging.warning(f"Event type: {message['event_type']}")
+            pass
+
+        result = requests.post(self.api_url + "api/event/", headers={'Authorization': f'Token {self.api_key}'},
+                               json={'id': id, 'success': success, 'response': response})
+        if result.status_code == 200:
+            logging.info(f"Processing message: {message} - OK")
+            return
+        else:
+            self.increment_error()
+            msg = f"Code: {result.status_code}, {result.text}"
+            logging.info(msg)
+
+    def processing_event_get(self, request) -> (str, bool):
+        result = requests.get(request)
+        if result.status_code == 200:
+            return result.content, True
+        else:
+            return result.content, False
