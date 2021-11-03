@@ -12,13 +12,13 @@ class PingSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Terminal
-        fields = ['name', 'info']
+        fields = ['name', 'info', 'version']
 
     def create(self, validated_data):
         return Terminal.objects.create(**validated_data, last_connect=datetime.now())
 
     def update(self, instance, validated_data):
-        # instance.ip_address = validated_data.get('ip_address', instance.ip_address)
+        instance.version = validated_data.get('version', instance.version)
         instance.info = validated_data.get('info', instance.info)
         instance.last_connect = datetime.now()
         return instance

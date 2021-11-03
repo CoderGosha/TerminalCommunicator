@@ -29,8 +29,8 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "name":
-  "Terminal1"
+  "name": "Terminal1",
+  "version": "0.1"
 }
 
 ###

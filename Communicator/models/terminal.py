@@ -14,6 +14,7 @@ class Terminal(models.Model):
     owner = models.ForeignKey('auth.User', related_name='terminals', on_delete=models.CASCADE,
                               default=1)
     metric = models.IntegerField(default=0)
+    version = models.CharField(max_length=20, blank=True, null=True)
     count_request = models.IntegerField(default=0)
     count_request_error = models.IntegerField(default=0)
 
