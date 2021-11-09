@@ -68,4 +68,4 @@ steps:
     CLIENT_API_TOKEN:
       from_secret: CLIENT_API_TOKEN
   commands:
-  - docker run -d --restart=no -v /tmp/terminal_communicator:/app/db.sqlite3 -m=350m --memory-swap=350m --cpus=".5" --pids-limit=200 --name terminal_communicator terminal_communicator;
+  - docker run -d --restart=no -v /tmp/terminal_communicator/static_files:/app/static_files -m=350m --memory-swap=350m --cpus=".5" --pids-limit=200 --name terminal_communicator terminal_communicator;
