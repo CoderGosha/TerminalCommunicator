@@ -18,7 +18,7 @@ clone:
 steps:
 - name: build
   commands:
-  - docker build -t terminal_python_client . -f Cleint/Python.Client/Dockerfile ;
+  - docker build -t terminal_python_client . -f Cleints/Python.Client/Dockerfile ;
 
 - name: delete old containers
   failure: ignore
