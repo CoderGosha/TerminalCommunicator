@@ -31,7 +31,7 @@ steps:
     CLIENT_API_TOKEN:
       from_secret: CLIENT_API_TOKEN
   commands:
-  - docker run -d --restart=no -m=350m --memory-swap=350m --cpus=".5" --pids-limit=200 -e=API_URL='http://176.107.130.186/' -e=NAME='PL.Aruba.Python' -e=API_KEY=$CLIENT_API_TOKEN --name terminal_python_client terminal_python_client;
+  - docker run -d --restart=no -m=350m --memory-swap=350m --cpus=".5" --pids-limit=200 -e=API_URL='http://176.107.130.186:8000/' -e=NAME='PL.Aruba.Python' -e=API_KEY=$CLIENT_API_TOKEN --name terminal_python_client terminal_python_client;
 
 ---
 
@@ -68,4 +68,4 @@ steps:
     CLIENT_API_TOKEN:
       from_secret: CLIENT_API_TOKEN
   commands:
-  - docker run -d --restart=no -v /tmp/terminal_communicator/static_files:/app/static_files -m=350m --memory-swap=350m --cpus=".5" --pids-limit=200 --name terminal_communicator terminal_communicator;
+  - docker run -d --restart=no -p 8000:8000 -v /tmp/terminal_communicator/static_files:/app/static_files -m=350m --memory-swap=350m --cpus=".5" --pids-limit=200 --name terminal_communicator terminal_communicator;
