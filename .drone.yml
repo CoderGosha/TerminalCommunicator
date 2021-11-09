@@ -6,6 +6,9 @@ platform:
   os: linux
   arch: amd64
 
+clone:
+  skip_verify: true
+  
 steps:
 - name: build
   commands:
@@ -20,6 +23,14 @@ steps:
 - name: publish
   commands:
   - docker run -d --restart=no -m=350m --memory-swap=350m --cpus=".5" --pids-limit=200 --name terminal_python_client terminal_python_client;
+
+- name: notification
+  pull: true
+  image: appleboy/drone-telegram
+  settings:
+    token:
+        from_secret: bot_token
+    to: -1001419585850
 
 ---
 kind: pipeline
