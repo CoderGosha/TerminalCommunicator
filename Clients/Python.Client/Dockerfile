@@ -1,7 +1,7 @@
 FROM python:3 AS runtime
 WORKDIR /app
-COPY Clients/Python.Client .
-RUN echo $(ls -1 .)
+COPY Clients/Python.Client /app
+
 
 RUN pip3 install -r requirements.txt
 
