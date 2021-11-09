@@ -1,7 +1,8 @@
 FROM python:3 AS runtime
 WORKDIR /app
-COPY . .
+COPY Clients/Python.Client .
+RUN echo $(ls -1 .)
 
-RUN pip3 install -r Clients/Python.Client/requirements.txt
+RUN pip3 install -r requirements.txt
 
-ENTRYPOINT ["python3", ".Clients/Python.Client/app.py"]
+ENTRYPOINT ["python3", ".app.py"]
