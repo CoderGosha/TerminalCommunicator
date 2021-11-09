@@ -5,7 +5,7 @@ name: python.Client
 platform:
   os: linux
   arch: amd64
-  
+
 steps:
 - name: build
   commands:
@@ -25,6 +25,9 @@ steps:
 kind: pipeline
 type: docker
 name: plugin_local
+
+clone:
+  skip_verify: true
 
 platform:
   os: linux
