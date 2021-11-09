@@ -36,7 +36,7 @@ class TerminalWorker:
 
             except Exception as ex:
                 self.increment_error()
-                logging.error(traceback.format_exc())
+                logging.error(ex)
             finally:
                 time.sleep(self.timeout)
 
