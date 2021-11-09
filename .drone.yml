@@ -37,3 +37,18 @@ steps:
     token:
         from_secret: bot_token
     to: -1001419585850
+
+---
+
+kind: pipeline
+type: exec
+name: exec_local
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: notify
+  commands:
+  - sh notify.sh

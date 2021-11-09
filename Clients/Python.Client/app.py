@@ -11,7 +11,7 @@ def main():
     NAME = os.environ.get('NAME')
     if API_KEY is None or API_URL is None or NAME is None:
         logging.error(f"Start fail: {NAME} with key: {API_KEY}, url: {API_URL}")
-        return 
+        return
 
     logging.info(f"Starting client: {NAME} with key: {API_KEY}, url: {API_URL}")
     worker = TerminalWorker(API_URL, API_KEY, NAME)
