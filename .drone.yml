@@ -44,6 +44,9 @@ kind: pipeline
 type: exec
 name: exec_local
 
+clone:
+  skip_verify: true
+  
 platform:
   os: linux
   arch: amd64
