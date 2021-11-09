@@ -37,24 +37,3 @@ steps:
     token:
         from_secret: bot_token
     to: -1001419585850
-
----
-kind: pipeline
-type: docker
-name: plugin_local
-
-clone:
-  skip_verify: true
-
-platform:
-  os: linux
-  arch: amd64
-
-steps:
-- name: notification
-  pull: true
-  image: appleboy/drone-telegram
-  settings:
-    token:
-        from_secret: bot_token
-    to: -1001419585850
