@@ -21,3 +21,20 @@ steps:
   commands:
   - docker run -d --restart=no -m=350m --memory-swap=350m --cpus=".5" --pids-limit=200 --name terminal_python_client terminal_python_client;
 
+---
+kind: pipeline
+type: docker
+name: plugin_local
+
+platform:
+  os: linux
+  arch: amd64
+
+steps:
+- name: notification
+  pull: true
+  image: appleboy/drone-telegram
+  settings:
+    token:
+        from_secret: bot_token
+    to: -1001419585850
