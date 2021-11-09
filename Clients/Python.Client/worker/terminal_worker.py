@@ -95,7 +95,7 @@ class TerminalWorker:
             result = requests.post(self.api_url + "api/event/", headers={'Authorization': f'Token {self.api_key}'},
                                    json={'id': id, 'success': success, 'response': response})
         except TypeError as ex:
-            logging.error(traceback.format_exc())
+            # logging.error(traceback.format_exc())
             result = requests.post(self.api_url + "api/event/", headers={'Authorization': f'Token {self.api_key}'},
                                    json={'id': id, 'success': success, 'response': response.decode()})
 
