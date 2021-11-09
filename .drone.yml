@@ -28,7 +28,7 @@ steps:
 
 - name: publish
   environment:
-    CLIENT_API_URL:
-      from_secret: client_api_url
+    CLIENT_API_TOKEN:
+      from_secret: CLIENT_API_TOKEN
   commands:
-  - docker run -d --restart=no -m=350m --memory-swap=350m --cpus=".5" --pids-limit=200 -e="API_URL":${CLIENT_API_URL} --name terminal_python_client terminal_python_client;
+  - docker run -d --restart=no -m=350m --memory-swap=350m --cpus=".5" --pids-limit=200 -e=API_URL:'http://176.107.130.186/' -e=NAME='PL.Aruba.Python' --name terminal_python_client terminal_python_client;
