@@ -3,6 +3,7 @@ import logging
 import os
 import threading
 import time
+import traceback
 
 import requests
 
@@ -35,7 +36,7 @@ class TerminalWorker:
 
             except Exception as ex:
                 self.increment_error()
-                logging.error(ex)
+                logging.error(traceback.format_exc())
             finally:
                 time.sleep(self.timeout)
 
@@ -90,8 +91,14 @@ class TerminalWorker:
             logging.warning(f"Event type: {message['event_type']}")
             pass
 
-        result = requests.post(self.api_url + "api/event/", headers={'Authorization': f'Token {self.api_key}'},
-                               json={'id': id, 'success': success, 'response': response})
+        try:
+            result = requests.post(self.api_url + "api/event/", headers={'Authorization': f'Token {self.api_key}'},
+                                   json={'id': id, 'success': success, 'response': response})
+        except Exception as ex:
+            logging.error(traceback.format_exc())
+            result = requests.post(self.api_url + "api/event/", headers={'Authorization': f'Token {self.api_key}'},
+                                   json={'id': id, 'success': success, 'response': response.decode()})
+
         if result.status_code == 200:
             logging.info(f"Processing message: {message} - OK")
             return
