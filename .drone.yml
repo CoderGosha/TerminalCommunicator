@@ -27,5 +27,8 @@ steps:
   - docker rm terminal_python_client;
 
 - name: publish
+  environment:
+    CLIENT_API_URL:
+      from_secret: client_api_url
   commands:
-  - docker run -d --restart=no -m=350m --memory-swap=350m --cpus=".5" --pids-limit=200 --name terminal_python_client terminal_python_client;
+  - docker run -d --restart=no -m=350m --memory-swap=350m --cpus=".5" --pids-limit=200 -e="API_URL":${CLIENT_API_URL} --name terminal_python_client terminal_python_client;
