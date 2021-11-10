@@ -84,21 +84,18 @@ class TerminalWorker:
         request = message["request"]
         success = True
         response = None
-
-        if message["event_type"] == 1:
+        event_type = message["event_type"]
+        if event_type == 0:
+            response, success = self.processing_event_exec(request)
+        elif event_type == 1:
             response, success = self.processing_event_get(request)
         else:
-            logging.warning(f"Unsupported: {message['event_type']} event type")
+            logging.warning(f"Unsupported: {event_type} event type")
             success = False
-            response = f"Unsupported: {message['event_type']} event type"
-        try:
-            result = requests.post(self.api_url + "api/event/", headers={'Authorization': f'Token {self.api_key}'},
-                                   json={'id': id, 'success': success, 'response': response})
-        except TypeError as ex:
-            # logging.error(traceback.format_exc())
-            result = requests.post(self.api_url + "api/event/", headers={'Authorization': f'Token {self.api_key}'},
-                                   json={'id': id, 'success': success, 'response': response.decode()})
+            response = f"Unsupported: {event_type} event type"
 
+        result = requests.post(self.api_url + "api/event/", headers={'Authorization': f'Token {self.api_key}'},
+                               json={'id': id, 'success': success, 'response': response})
         if result.status_code == 200:
             logging.info(f"Processing message: {message} - OK")
             return
@@ -110,6 +107,20 @@ class TerminalWorker:
     def processing_event_get(self, request) -> (str, bool):
         result = requests.get(request)
         if result.status_code == 200:
-            return result.content, True
+            return result.content.decode(), True
         else:
-            return result.content, False
+            return result.content.decode(), False
+
+    def processing_event_exec(self, request) -> (str, bool):
+        try:
+            import subprocess
+            process = subprocess.Popen(request,
+                                       stdout=subprocess.PIPE,
+                                       stderr=subprocess.PIPE, shell=True)
+            stdout, stderr = process.communicate()
+            if stdout is not None and len(stdout) != 0:
+                return str(stdout), True
+            else:
+                return str(stderr), False
+        except Exception as ex:
+            return str(ex), False
