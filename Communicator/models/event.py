@@ -9,13 +9,14 @@ from Communicator.models import Terminal
 
 class Event(models.Model):
     class EventType(models.IntegerChoices):
-        GET = 0
+        EXEC = 0,
+        HTTP_GET = 1
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     data_create = models.DateTimeField(default=datetime.now())
     event_type = models.IntegerField(
         choices=EventType.choices,
-        default=EventType.GET,
+        default=EventType.EXEC,
     )
     request = models.CharField(max_length=100)
     terminal = models.ForeignKey(Terminal, on_delete=models.SET_NULL, blank=True, null=True)

@@ -85,12 +85,12 @@ class TerminalWorker:
         success = True
         response = None
 
-        if message["event_type"] == 0:
+        if message["event_type"] == 1:
             response, success = self.processing_event_get(request)
         else:
-            logging.warning(f"Event type: {message['event_type']}")
-            pass
-
+            logging.warning(f"Unsupported: {message['event_type']} event type")
+            success = False
+            response = f"Unsupported: {message['event_type']} event type"
         try:
             result = requests.post(self.api_url + "api/event/", headers={'Authorization': f'Token {self.api_key}'},
                                    json={'id': id, 'success': success, 'response': response})
