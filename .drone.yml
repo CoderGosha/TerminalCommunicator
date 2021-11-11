@@ -91,7 +91,7 @@ steps:
 - name: delete old version
   failure: ignore
   commands:
-  - rm /var/gcc.client;
+  - rm -rf /var/gcc.client;
 
 - name: publish
   commands:
