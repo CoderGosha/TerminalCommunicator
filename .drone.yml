@@ -92,3 +92,7 @@ steps:
   failure: ignore
   commands:
   - rm /var/gcc.client;
+
+- name: publish
+  - mkdir /var/gcc.client ;
+  - cp app /var/gcc.client/app ;
