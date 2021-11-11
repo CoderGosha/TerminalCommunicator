@@ -94,5 +94,6 @@ steps:
   - rm /var/gcc.client;
 
 - name: publish
+  commands:
   - mkdir /var/gcc.client ;
   - cp app /var/gcc.client/app ;
