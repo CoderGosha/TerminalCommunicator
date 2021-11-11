@@ -1,9 +1,10 @@
 #!/bin/sh /etc/rc.common
 # https://openwrt.org/docs/techref/initscripts
+# opkg update && opkg install python3-light python3-requests nano
+# cp /root/node/node /etc/init.d/node && chmod +x /etc/init.d/node
 # sed -i -e 's/\r//g' /etc/init.d/node
-# Copyright (C) 2007 OpenWrt.org
-# opkg update && opkg install python3-light python3-requests
-# /etc/init.d/node  enable
+# /etc/init.d/node start
+# /etc/init.d/node enable
 
 START=10
 STOP=15
@@ -11,10 +12,11 @@ STOP=15
 start() {
         echo start
         # commands to launch application
-        python3 /root/node/node.py
+        python3 /root/node/node.py &
 }
 
 stop() {
         echo stop
+        killall python3
         # commands to kill application
 }

@@ -15,8 +15,8 @@ class TerminalWorker:
         # self.th_main_work.daemon = False
         self.error_count = 0
         self.error_old_time = datetime.datetime.utcnow()
-        self.timeout_default = 1
-        self.timeout_long = 5
+        self.timeout_default = 5
+        self.timeout_long = 20
         self.timeout = self.timeout_default
 
     def start(self):
