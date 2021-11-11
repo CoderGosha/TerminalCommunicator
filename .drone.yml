@@ -36,6 +36,34 @@ steps:
 ---
 
 kind: pipeline
+type: exec
+name: Terminal.GCC.Client
+
+platform:
+  os: linux
+  arch: amd64
+
+clone:
+  skip_verify: true
+
+steps:
+- name: build
+  commands:
+  - gcc -Wall Clients/GCC.Client/app.cpp -o app
+
+- name: delete old version
+  failure: ignore
+  commands:
+  - rm -rf /var/gcc.client;
+
+- name: publish
+  commands:
+  - mkdir /var/gcc.client ;
+  - cp app /var/gcc.client/app ;
+
+---
+
+kind: pipeline
 type: ssh
 name: Terminal.Communicator
 
@@ -70,30 +98,3 @@ steps:
   commands:
   - docker run -d --restart=no -p 8000:8000 -v /var/terminal_communicator/static_files:/app/static_files -m=350m --memory-swap=350m --cpus=".5" --pids-limit=200 --name terminal_communicator terminal_communicator;
 
----
-
-kind: pipeline
-type: exec
-name: Terminal.GCC.Client
-
-platform:
-  os: linux
-  arch: amd64
-
-clone:
-  skip_verify: true
-
-steps:
-- name: build
-  commands:
-  - gcc -Wall Clients/GCC.Client/app.cpp -o app
-
-- name: delete old version
-  failure: ignore
-  commands:
-  - rm -rf /var/gcc.client;
-
-- name: publish
-  commands:
-  - mkdir /var/gcc.client ;
-  - cp app /var/gcc.client/app ;
