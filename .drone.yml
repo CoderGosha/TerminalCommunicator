@@ -86,5 +86,5 @@ clone:
 steps:
 - name: build
   commands:
-  - gcc -Wall Clients\GCC.Client\app.cpp -o app
-  - cp app \var\gcc.client\app
+  - gcc -Wall Clients/GCC.Client/app.cpp -o app
+  - cp app /var/gcc.client/app
