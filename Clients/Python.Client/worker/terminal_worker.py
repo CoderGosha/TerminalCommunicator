@@ -1,10 +1,8 @@
 import datetime
 import logging
 import os
-import threading
+# import threading
 import time
-import traceback
-
 import requests
 
 
@@ -14,8 +12,8 @@ class TerminalWorker:
         self.api_key = api_key
         self.name = name
         self.version = "0.1"
-        self.th_main_work = threading.Thread(target=self.do_main_work)
-        self.th_main_work.daemon = False
+        # self.th_main_work = threading.Thread(target=self.do_main_work)
+        # self.th_main_work.daemon = False
         self.error_count = 0
         self.error_old_time = datetime.datetime.utcnow()
         self.timeout_default = 1
@@ -23,8 +21,9 @@ class TerminalWorker:
         self.timeout = self.timeout_default
 
     def start(self):
-        self.th_main_work.start()
+        # self.th_main_work.start()
         # self.th_main_work.join()
+        self.do_main_work()
 
     def do_main_work(self):
         while True:
