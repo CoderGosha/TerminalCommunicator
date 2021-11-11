@@ -12,6 +12,9 @@ class Event(models.Model):
         EXEC = 0,
         HTTP_GET = 1
 
+    class Meta(object):
+        ordering = ['-data_create']
+
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     data_create = models.DateTimeField(default=datetime.now())
     event_type = models.IntegerField(
