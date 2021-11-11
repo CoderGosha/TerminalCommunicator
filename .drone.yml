@@ -88,11 +88,4 @@ steps:
   commands:
   - gcc -Wall Clients/GCC.Client/app.cpp -o app
 
-- name: delete old version
-  failure: ignore
-  commands:
-  - rm /var/gcc.client/
 
-- name: publish
-  - mkdir /var/gcc.client/
-  - cp app /var/gcc.client/app
