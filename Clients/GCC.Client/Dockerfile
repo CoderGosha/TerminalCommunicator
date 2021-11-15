@@ -12,6 +12,12 @@ ADD Clients/GCC.Client/src /app/src
 # Установим рабочую директорию для сборки проекта
 WORKDIR /app/build
 
+RUN apt-get update && \
+    apt-get install -y \
+      libboost-dev libboost-program-options-dev \
+      libgtest-dev \
+      cmake 
+
 # Выполним сборку нашего проекта, а также его тестирование
 RUN cmake ../src && \
     cmake --build . && \
