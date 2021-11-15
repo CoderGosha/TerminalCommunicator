@@ -36,34 +36,6 @@ steps:
 ---
 
 kind: pipeline
-type: exec
-name: Terminal.GCC.Client
-
-platform:
-  os: linux
-  arch: amd64
-
-clone:
-  skip_verify: true
-
-steps:
-- name: build
-  commands:
-  - gcc -Wall Clients/GCC.Client/app.cpp -o app
-
-- name: delete old version
-  failure: ignore
-  commands:
-  - rm -rf /var/gcc.client;
-
-- name: publish
-  commands:
-  - mkdir /var/gcc.client ;
-  - cp app /var/gcc.client/app ;
-
----
-
-kind: pipeline
 type: ssh
 name: Terminal.Communicator
 
