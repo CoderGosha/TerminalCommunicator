@@ -51,7 +51,7 @@ steps:
   commands:
   - docker build -t terminal_gcc_client . -f Clients/GCC.Client/Dockerfile ;
   - docker container create --name temp terminal_gcc_client
-  - docker container cp temp:/app/build /var/gcc.client
+  - docker container cp temp:/app/build/node /var/gcc.client/node
   - docker container rm temp
 
 ---
