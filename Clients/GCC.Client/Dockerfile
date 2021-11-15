@@ -7,7 +7,7 @@ FROM gcc:latest as build
 WORKDIR /build
 
 # Скопируем директорию /src в контейнер
-ADD ./src /app/src
+ADD Clients/GCC.Client/src /app/src
 
 # Установим рабочую директорию для сборки проекта
 WORKDIR /app/build
