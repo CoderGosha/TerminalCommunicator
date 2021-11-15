@@ -22,7 +22,7 @@ WORKDIR /app/build
 #RUN cmake ../src && \
 #    cmake --build . && \
 #    CTEST_OUTPUT_ON_FAILURE=TRUE cmake --build . --target test
-RUN gcc -Wall src/app.cpp -o node
+RUN gcc -Wall ../src/app.cpp -o node
 
 # Запуск ---------------------------------------
 
