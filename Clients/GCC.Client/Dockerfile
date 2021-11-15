@@ -12,16 +12,17 @@ ADD Clients/GCC.Client/src /app/src
 # Установим рабочую директорию для сборки проекта
 WORKDIR /app/build
 
-RUN apt-get update && \
-    apt-get install -y \
-      libboost-dev libboost-program-options-dev \
-      libgtest-dev \
-      cmake 
+#RUN apt-get update && \
+#    apt-get install -y \
+#      libboost-dev libboost-program-options-dev \
+#      libgtest-dev \
+#      cmake
 
 # Выполним сборку нашего проекта, а также его тестирование
-RUN cmake ../src && \
-    cmake --build . && \
-    CTEST_OUTPUT_ON_FAILURE=TRUE cmake --build . --target test
+#RUN cmake ../src && \
+#    cmake --build . && \
+#    CTEST_OUTPUT_ON_FAILURE=TRUE cmake --build . --target test
+RUN gcc -Wall src/app.cpp -o node
 
 # Запуск ---------------------------------------
 
@@ -32,7 +33,7 @@ FROM ubuntu:latest
 WORKDIR /app
 
 # Скопируем приложение со сборочного контейнера в рабочую директорию
-COPY --from=build /app/build/hello_world_app .
+COPY --from=build /app/build/node .
 
 # Установим точку входа
-ENTRYPOINT ["./hello_world_app"]
+ENTRYPOINT ["./node"]
