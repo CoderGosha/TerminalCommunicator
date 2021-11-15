@@ -25,7 +25,7 @@ WORKDIR /app/build
 RUN gcc -Wall ../src/app.cpp -o /app/build/node
 
 # Скопируем приложение со сборочного контейнера в рабочую директорию
-COPY /app/build/node .
+#COPY /app/build/node .
 
 # Установим точку входа
-ENTRYPOINT ["./node"]
+ENTRYPOINT ["/app/build/node"]
