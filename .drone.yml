@@ -47,12 +47,18 @@ clone:
   skip_verify: true
 
 steps:
+- name: delete old containers
+  failure: ignore
+  commands:
+  - docker stop terminal_gcc_client;
+  - docker rm terminal_gcc_client;
+  -
 - name: build
   commands:
   - docker build -t terminal_gcc_client . -f Clients/GCC.Client/Dockerfile ;
-  - docker container create --name temp terminal_gcc_client
-  - docker container cp temp:/app/build/node /var/gcc.client/node
-  - docker container rm temp
+  - docker container create --name terminal_gcc_client terminal_gcc_client
+  - docker container cp terminal_gcc_client:/app/build/node /var/gcc.client/node
+  - docker container rm terminal_gcc_client
 
 ---
 
