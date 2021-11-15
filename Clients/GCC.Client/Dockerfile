@@ -24,8 +24,5 @@ WORKDIR /app/build
 #    CTEST_OUTPUT_ON_FAILURE=TRUE cmake --build . --target test
 RUN gcc -Wall ../src/app.cpp -o /app/build/node
 
-# Скопируем приложение со сборочного контейнера в рабочую директорию
-#COPY /app/build/node .
-
 # Установим точку входа
 ENTRYPOINT ["/app/build/node"]

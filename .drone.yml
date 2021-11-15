@@ -57,7 +57,7 @@ steps:
   commands:
   - docker build -t terminal_gcc_client . -f Clients/GCC.Client/Dockerfile ;
   - docker container create --name terminal_gcc_client terminal_gcc_client
-  - docker container cp terminal_gcc_client:/app/build/node /var/gcc.client/node
+  - docker container cp terminal_gcc_client:/app/build/node /var/gcc.client/node_amd64
   - docker container rm terminal_gcc_client
 
 ---
