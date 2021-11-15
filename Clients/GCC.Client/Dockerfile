@@ -24,16 +24,8 @@ WORKDIR /app/build
 #    CTEST_OUTPUT_ON_FAILURE=TRUE cmake --build . --target test
 RUN gcc -Wall ../src/app.cpp -o node
 
-# Запуск ---------------------------------------
-
-# В качестве базового образа используем ubuntu:latest
-FROM ubuntu:latest
-
-# Установим рабочую директорию нашего приложения
-WORKDIR /app
-
 # Скопируем приложение со сборочного контейнера в рабочую директорию
-COPY --from=build /app/build/node .
+COPY /app/build/node .
 
 # Установим точку входа
 ENTRYPOINT ["./node"]
