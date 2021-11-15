@@ -36,6 +36,27 @@ steps:
 ---
 
 kind: pipeline
+type: exec
+name: Terminal.Client.GCC.x64.
+
+platform:
+  os: linux
+  arch: amd64
+
+clone:
+  skip_verify: true
+
+steps:
+- name: build
+  commands:
+  - docker build -t terminal_gcc_client . -f Clients/GCC.Client/Dockerfile ;
+  - docker container create --name temp terminal_gcc_client
+  - docker container cp temp:/app/build /var/gcc.client
+  - docker container rm temp
+
+---
+
+kind: pipeline
 type: ssh
 name: Terminal.Communicator
 
