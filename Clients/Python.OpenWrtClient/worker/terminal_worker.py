@@ -16,7 +16,8 @@ class TerminalWorker:
         self.error_count = 0
         self.error_old_time = datetime.datetime.utcnow()
         self.timeout_default = 5
-        self.timeout_long = 20
+        self.timeout_long = 30
+        self.timeout_very_long = 30 * 60
         self.timeout = self.timeout_default
 
     def start(self):
@@ -49,16 +50,18 @@ class TerminalWorker:
 
     def increment_error(self):
         # Если время прошлой ошибки более часа то сбросим счетчик
-        if (self.error_old_time + datetime.timedelta(hours=1)) < datetime.datetime.utcnow():
+        if (self.error_old_time + datetime.timedelta(hours=3)) < datetime.datetime.utcnow():
             self.error_count = 0
             self.timeout = self.timeout_default
 
         self.error_count += 1
         self.error_old_time = datetime.datetime.utcnow()
 
-        if self.error_count > 500:
-            # self.message_helper.send_notify("App terminated, error count:" + str(self.error_count))
+        if self.error_count > 1000:
             os._exit(1)
+
+        if self.error_count > 500:
+            self.timeout = self.timeout_very_long
 
         if self.error_count > 50:
             self.timeout = self.timeout_long

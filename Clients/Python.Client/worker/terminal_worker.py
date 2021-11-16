@@ -53,7 +53,7 @@ class TerminalWorker:
 
     def increment_error(self):
         # Если время прошлой ошибки более часа то сбросим счетчик
-        if (self.error_old_time + datetime.timedelta(hours=1)) < datetime.datetime.utcnow():
+        if (self.error_old_time + datetime.timedelta(hours=3)) < datetime.datetime.utcnow():
             self.error_count = 0
             self.timeout = self.timeout_default
 
