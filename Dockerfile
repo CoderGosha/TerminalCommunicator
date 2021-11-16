@@ -4,6 +4,6 @@ COPY . .
 RUN dir /app
 
 RUN pip3 install -r requirements.txt
+RUN chmod +x /app/docker-entrypoint.sh
 
-#ENTRYPOINT ["python3", "manage.py", "runserver", "0.0.0.0:8000"]
-ENTRYPOINT ["/app/run.sh"]
+ENTRYPOINT ["/app/docker-entrypoint.sh"]
