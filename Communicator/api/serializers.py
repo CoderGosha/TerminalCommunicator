@@ -41,3 +41,12 @@ class EventResultSerializer(serializers.ModelSerializer):
         instance.data_completed = datetime.now()
         instance.save()
         return instance
+
+
+class EventRequestSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = ['event_type', 'request']
+
+    def create(self, validated_data):
+        return Event.objects.create(**validated_data, data_create=datetime.now())

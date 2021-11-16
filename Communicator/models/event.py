@@ -23,6 +23,8 @@ class Event(models.Model):
     )
     request = models.CharField(max_length=100)
     terminal = models.ForeignKey(Terminal, on_delete=models.SET_NULL, blank=True, null=True)
+    owner = models.ForeignKey('auth.User', related_name='events', on_delete=models.CASCADE,
+                              default=1)
 
     # Ответ от терминала
     data_completed = models.DateTimeField(blank=True, null=True)
@@ -37,5 +39,10 @@ class Event(models.Model):
         else:
             return "ERROR"
 
+    def shot_terminal(self):
+        if self.terminal is None:
+            return "NO TERMINAL"
+        return self.terminal.get_name()
+
     def __str__(self):
-        return f'{self.get_event_type_display()} ({self.terminal.get_name()}) - {self.data_create}  - {self.get_status_display()}'
+        return f'{self.get_event_type_display()} ({self.shot_terminal()}) - {self.data_create}  - {self.get_status_display()}'

@@ -1,3 +1,22 @@
+###
+GET http://localhost:8000/api/provider?id=6553e3eb-6e25-4647-8411-2563656a2a9c
+Accept: application/json
+Authorization: Token {{token}}
+
+###
+
+POST http://localhost:8000/api/provider/
+Authorization: Token {{token}}
+Accept: application/json
+Content-Type: application/json
+
+{
+  "request": "dir",
+  "event_type" : 0
+}
+
+###
+
 POST http://localhost:8000/api/event/
 Authorization: Token {{token}}
 Accept: application/json
