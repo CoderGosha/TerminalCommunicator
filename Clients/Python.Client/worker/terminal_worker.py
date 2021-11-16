@@ -17,7 +17,8 @@ class TerminalWorker:
         self.error_count = 0
         self.error_old_time = datetime.datetime.utcnow()
         self.timeout_default = 1
-        self.timeout_long = 5
+        self.timeout_long = 30
+        self.timeout_very_long = 30 * 60
         self.timeout = self.timeout_default
 
     def start(self):
@@ -59,10 +60,12 @@ class TerminalWorker:
         self.error_count += 1
         self.error_old_time = datetime.datetime.utcnow()
 
-        if self.error_count > 500:
+        if self.error_count > 1000:
             logging.info(f"Close App with error: {self.error_count}")
-            # self.message_helper.send_notify("App terminated, error count:" + str(self.error_count))
             os._exit(1)
+
+        if self.error_count > 500:
+            self.timeout = self.timeout_very_long
 
         if self.error_count > 50:
             self.timeout = self.timeout_long
