@@ -23,6 +23,9 @@ class ProviderView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
+        if not request.user.has_perm('Communicator.add_event'):
+            return Response({}, status=status.HTTP_403_FORBIDDEN)
+
         serialazer = EventRequestSerializer(data=request.data)
         if serialazer.is_valid(raise_exception=True):
             terminal = self.get_terminal()
@@ -35,6 +38,7 @@ class ProviderView(APIView):
     '''
         Выберем все активные терминалы и отсортируем по метрике (добавить ротацию)
     '''
+
     def get_terminal(self) -> Terminal:
         timeout = datetime.datetime.now()
         timeout = timeout + datetime.timedelta(minutes=-10)

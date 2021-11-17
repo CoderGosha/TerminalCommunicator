@@ -66,7 +66,7 @@ class TerminalWorker:
 
         if self.error_count > 50:
             self.timeout = self.timeout_long
-            return 
+            return
 
     def get_event(self):
         result = requests.get(self.api_url + "api/event", headers={'Authorization': f'Token {self.api_key}'},
