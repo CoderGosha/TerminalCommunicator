@@ -1,4 +1,4 @@
-#include <curl.h>
+#include <curl/curl.h>
 
 
 int ping(){
