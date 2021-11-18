@@ -23,7 +23,7 @@ SECRET_KEY = 'django-insecure-&zr5_ka=5aw_2fe!#0_a-!p*9nvi5uea+3uqqeil!kpb#8sx5x
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # DEBUG = int(os.environ.get("DEBUG", default=0))
-DEGUB = True
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -172,6 +172,3 @@ SWAGGER_SETTINGS = {
 
 LOGIN_URL = 'rest_framework:login'
 LOGOUT_URL = 'rest_framework:logout'
-
-import mimetypes
-mimetypes.add_type("text/css", ".css", True)
