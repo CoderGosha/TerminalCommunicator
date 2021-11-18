@@ -2,11 +2,10 @@ import datetime
 import logging
 import os
 import time
-
 import requests
 
 
-class CommunicatorProvider():
+class CommunicatorProvider:
     def __init__(self, api_url, api_key):
         self.api_url = api_url
         self.api_key = api_key
@@ -58,4 +57,6 @@ def main():
 
 
 if __name__ == '__main__':
+    from loggerinitializer import initialize_logger
+    initialize_logger("log")
     main()
