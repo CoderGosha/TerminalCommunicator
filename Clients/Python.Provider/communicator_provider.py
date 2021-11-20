@@ -32,6 +32,7 @@ class CommunicatorProvider:
                     logging.debug('Waiting response')
                     time.sleep(1)
                 else:
+                    logging.info(f"Request: {request} - {event_id} - ok")
                     return response['response'], response['success']
             else:
                 msg = f"Code: {result_command.status_code}, {result_command.text}"

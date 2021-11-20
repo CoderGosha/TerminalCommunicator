@@ -21,7 +21,7 @@ class Event(models.Model):
         choices=EventType.choices,
         default=EventType.EXEC,
     )
-    request = models.CharField(max_length=100)
+    request = models.CharField(max_length=300)
     terminal = models.ForeignKey(Terminal, on_delete=models.SET_NULL, blank=True, null=True)
     owner = models.ForeignKey('auth.User', related_name='events', on_delete=models.CASCADE,
                               default=1)
