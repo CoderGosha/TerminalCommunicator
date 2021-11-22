@@ -1,5 +1,5 @@
 #include<stdio.h>
-#include "client.h"
+#include "worker.h"
 #include "timeout.h"
 #include <unistd.h>
 #include <chrono>
@@ -9,18 +9,17 @@ int main()
 {
     printf("\nStart ldnode \n\n");
     timeout tout = timeout();
+    worker w = worker();
 
     while (true)
     {
         try
         {
-            printf("\nPing processing \n\n");
-            ping();
-            printf("\nPing finish \n\n");
+            w.worker_do();
         }
         catch(const std::exception& e)
         {
-            //std::cerr << e.what() << '\n';
+            fprintf(stderr, "worker failed: %s\n", e.what());
             tout.increment_error();
         }
         std::this_thread::sleep_for(std::chrono::milliseconds(tout.get_timeout()));
