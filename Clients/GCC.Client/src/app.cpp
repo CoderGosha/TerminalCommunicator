@@ -21,8 +21,8 @@ int main()
         catch(const std::exception& e)
         {
             //std::cerr << e.what() << '\n';
+            tout.increment_error();
         }
-
         std::this_thread::sleep_for(std::chrono::milliseconds(tout.get_timeout()));
     }
     
