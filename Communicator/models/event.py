@@ -45,4 +45,4 @@ class Event(models.Model):
         return self.terminal.get_name()
 
     def __str__(self):
-        return f'{self.get_event_type_display()} ({self.shot_terminal()}) - {self.data_create}  - {self.get_status_display()}'
+        return f'{self.get_event_type_display()} ({(self.data_create.strftime("%d-%m-%Y %H:%M:%S"))}) - {self.get_status_display()}'
