@@ -1,13 +1,16 @@
 #include "client.h"
 #include "json-parser/json.c"
 #include "providers/exec_provider.h"
+#include "providers/get_provider.h"
 
 class worker
 {
 private:
     /* data */
     client clnt;
-    exec_provider exec_prvd;
+    ExecProvider exec_prvd;
+    GetProvider get_proider;
+
     int eval_message(const char *);
     int process_message(json_value* value, std::string& id, std::string& response);
     int send_result_messge(std::string id, std::string response, int status);
@@ -20,7 +23,8 @@ public:
 worker::worker(/* args */)
 {
     clnt = client();
-    exec_prvd = exec_provider();
+    exec_prvd = ExecProvider();
+    get_proider = GetProvider();
 }
 
 worker::~worker()
@@ -57,9 +61,17 @@ int worker::eval_message(const char * request){
         case json_array:
             length = value->u.array.length;
             for (x = 0; x < length; x++) {
-                status = process_message(value->u.array.values[x], id, response);
-                printf("Response message id: %s\n", id.c_str());
-                send_result_messge(id, response, status);
+                try {
+                    status = process_message(value->u.array.values[x], id, response);
+                    printf("Response message id: %s\n", id.c_str());
+                }
+                catch (const std::exception& e)
+                {
+                    status = 0;
+                    response = e.what();
+                }
+                if (id.length() > 1)
+                    send_result_messge(id, response, status);
             }
             break;
     
@@ -106,6 +118,11 @@ int worker::process_message(json_value* value, std::string& id, std::string& res
         // exec
         {
             status = exec_prvd.exec(id, request, response);
+            break;
+        }
+    case 1:
+        {
+            status = get_proider.exec(id, request, response);
             break;
         }
     default:

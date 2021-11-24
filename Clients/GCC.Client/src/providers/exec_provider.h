@@ -7,17 +7,17 @@
 #include <string>
 #include <array>
 
-class exec_provider
+class ExecProvider
 {
 private:
     /* data */
 public:
-    exec_provider(/* args */) {};
-    ~exec_provider() {};
+    ExecProvider(/* args */) {};
+    ~ExecProvider() {};
     int exec(std::string& id, std::string request, std::string& response);
 };
 
- int exec_provider::exec(std::string& id, std::string request, std::string& response){
+ int ExecProvider::exec(std::string& id, std::string request, std::string& response){
     int status = 1;
     time_t time_now = time(NULL);
     time_t time_fliex = time_now + 60 * 1;
