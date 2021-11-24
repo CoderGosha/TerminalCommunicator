@@ -1,12 +1,13 @@
 #include "client.h"
 #include "json-parser/json.c"
+#include "providers/exec_provider.h"
 
 class worker
 {
 private:
     /* data */
     client clnt;
-   
+    exec_provider exec_prvd;
     int eval_message(const char *);
     int process_message(json_value* value, std::string& id, std::string& response);
     int send_result_messge(std::string id, std::string response, int status);
@@ -19,7 +20,7 @@ public:
 worker::worker(/* args */)
 {
     clnt = client();
-
+    exec_prvd = exec_provider();
 }
 
 worker::~worker()
@@ -47,8 +48,8 @@ int worker::eval_message(const char * request){
 
     value = json_parse(request, strlen(request));
     if (value == NULL) {
-                fprintf(stderr, "Unable to parse data\n");
-                return -1;
+        fprintf(stderr, "Unable to parse data\n");
+        return -1;
     }
     int length, x;
     switch (value->type)
@@ -70,7 +71,7 @@ int worker::eval_message(const char * request){
 
 int worker::process_message(json_value* value, std::string& id, std::string& response){
     int length, x;
-    
+    int status = 0;
     std::string request;
     int event_type;
     std::string id_name = "id";
@@ -98,9 +99,27 @@ int worker::process_message(json_value* value, std::string& id, std::string& res
                 break;
         }
     }
+
+    switch (event_type)
+    {
+    case 0:
+        // exec
+        {
+            status = exec_prvd.exec(id, request, response);
+            break;
+        }
+    default:
+        {
+            status = 0;
+            response = "unknown event type";
+            break;
+        }
+
+    }
+
     printf("Message new: %s\n", id.c_str());
-    response = "ok";
-    return 1;
+    //response = "ok";
+    return status;
 }
 
 int worker::send_result_messge(std::string id, std::string response, int status){

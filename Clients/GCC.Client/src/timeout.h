@@ -1,29 +1,34 @@
 #include <string>
 
+#ifndef TIMEOUT_H
+#define TIMEOUT_H
+
 class timeout
 {
 private:
-    int timeout_default = 10;
-    int timeout_long = 30;
-    int timeout_very_long = 30 * 60;
-    int timeout_current = 1;
-
-    int error_count = 0;
-    time_t error_time = time(NULL);
+    static int const timeout_long = 30;
+    static int const timeout_very_long = 30 * 60;
 
 public:
-    int get_timeout(){
-        return 1000 * timeout_current;
-    }
+    static int const timeout_default = 10;
+    static int timeout_current;
+    static int error_count;
+    static time_t error_time;
 
-    void increment_error(){
+    static int get_timeout(){
+        return 1000 * timeout_current;
+    };
+    static void increment_error()
+    {
         time_t time_now = time(NULL);
-        time_t time_fliex = error_time * 60 * 60 * 3;
+        time_t time_fliex = error_time + 60 * 60 * 3;
 
         if (time_fliex < time_now){
             error_count = 0;
             timeout_current = timeout_default;
         }
+
+        printf("\n increment_error: %i \n\n", error_count);
 
         struct tm *tm = localtime(&error_time);
         error_count += 1;
@@ -42,18 +47,15 @@ public:
             timeout_current = timeout_long;
             return;
         }
-    }
+    };
 
-    timeout(/* args */);
-    ~timeout();
+    timeout(/* args */) {};
+    ~timeout() {};
 };
 
-timeout::timeout(/* args */)
-{
-    timeout_current = timeout_default;
-}
+int timeout::error_count = 0;
+time_t timeout::error_time = time(NULL);
+int timeout::timeout_current = timeout::timeout_default;
 
-timeout::~timeout()
-{
-}
+#endif
 

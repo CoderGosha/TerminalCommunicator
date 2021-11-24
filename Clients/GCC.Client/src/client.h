@@ -5,6 +5,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "timeout.h"
+
+#include <sstream>
+#include <iomanip>
+
+std::string escape_json(const std::string &s) {
+    std::ostringstream o;
+    for (auto c = s.cbegin(); c != s.cend(); c++) {
+        if (*c == '"' || *c == '\\' || ('\x00' <= *c && *c <= '\x1f')) {
+            o << "\\u"
+              << std::hex << std::setw(4) << std::setfill('0') << (int)*c;
+        } else {
+            o << *c;
+        }
+    }
+    return o.str();
+}
 
 class client
 {
@@ -67,10 +84,17 @@ int client::ping(){
     /* Perform the request, res will get the return code */
     res = curl_easy_perform(curl);
     /* Check for errors */
-    if(res != CURLE_OK)
+    if(res != CURLE_OK) {
       fprintf(stderr, "curl_easy_perform() failed: %s\n",
               curl_easy_strerror(res));
-  
+      timeout::increment_error();
+      }
+    if(res == CURLE_OK) {
+       long response_code;
+       curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response_code);
+       if (response_code != 200)
+          timeout::increment_error();
+     }
     /* always cleanup */
     curl_easy_cleanup(curl);
   }
@@ -105,13 +129,19 @@ std::string client::get_events(){
     /* Perform the request, res will get the return code */
     res = curl_easy_perform(curl);
     /* Check for errors */
-    if(res != CURLE_OK)
+    if(res != CURLE_OK) {
       fprintf(stderr, "curl_easy_perform() failed: %s\n",
               curl_easy_strerror(res));
-    if (res == CURLE_OK){
-      //
-        curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response_code);
-    }
+         timeout::increment_error();
+         return NULL;
+      }
+
+    if(res == CURLE_OK) {
+       long response_code;
+       curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response_code);
+       if (response_code != 200)
+          timeout::increment_error();
+     }
 
     curl_easy_cleanup(curl);
   }
@@ -129,8 +159,8 @@ int client::post_event(std::string id, std::string response, int status){
 
   curl = curl_easy_init();
   if(curl) {
-    
-    std::string data = "{\"id\" : \"" + id + "\", \"response\" : \"" + response + "\" , \"success\" : " + status_str + "}";
+    std::string response_escape = escape_json(response); 
+    std::string data = "{\"id\" : \"" + id + "\", \"response\" : \"" + response_escape + "\" , \"success\" : " + status_str + "}";
 
     struct curl_slist *chunk = NULL;
     chunk = curl_slist_append(chunk, token.c_str());
@@ -143,12 +173,22 @@ int client::post_event(std::string id, std::string response, int status){
     /* Perform the request, res will get the return code */
     res = curl_easy_perform(curl);
     /* Check for errors */
-    if(res != CURLE_OK)
+    if(res != CURLE_OK) {
       fprintf(stderr, "curl_easy_perform() failed: %s\n",
               curl_easy_strerror(res));
-  
+      timeout::increment_error();
+      return -1;
+    }
+
+    if(res == CURLE_OK) {
+       long response_code;
+       curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &response_code);
+       if (response_code != 200)
+          timeout::increment_error();
+     }
     /* always cleanup */
     curl_easy_cleanup(curl);
   }
   return 0;
 }
+
