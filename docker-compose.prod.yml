@@ -4,7 +4,7 @@ services:
   web:
     build: ./app
     context: .
-      dockerfile: Dockerfile.prod
+    dockerfile: Dockerfile.prod
     command: python manage.py runserver 0.0.0.0:8000
     volumes:
       - ./app/:/usr/src/app/
