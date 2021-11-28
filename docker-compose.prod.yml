@@ -1,9 +1,9 @@
-version: "3.6"
+version: "3.7"
 
 services:
   web:
     build:
-      context: ./app
+      context: .
       dockerfile: Dockerfile.prod
     command: python manage.py runserver 0.0.0.0:8000
     ports:
@@ -17,7 +17,7 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data/
     env_file:
-      - ./..env.prod.db
+      - ./.env.prod.db
 
 volumes:
   postgres_data:
