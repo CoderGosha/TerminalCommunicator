@@ -82,4 +82,5 @@ clone:
 steps:
 - name: build and run
   commands:
-  - docker-compose -f docker-compose.prod.yml up -d --build
+    - ls
+    - docker-compose -f docker-compose.prod.yml up -d --build
