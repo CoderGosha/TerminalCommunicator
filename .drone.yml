@@ -18,7 +18,7 @@ clone:
 steps:
 - name: build
   commands:
-  - docker build -t terminal_python_client . -f Clients/Python.Client/Dockerfile.prod ;
+  - docker build -t terminal_python_client . -f Clients/Python.Client/Dockerfile;
 
 - name: delete old containers
   failure: ignore
@@ -55,7 +55,7 @@ steps:
   -
 - name: build
   commands:
-  - docker build -t terminal_gcc_client . -f Clients/GCC.Client/Dockerfile.prod ;
+  - docker build -t terminal_gcc_client . -f Clients/GCC.Client/Dockerfile ;
   - docker container create --name terminal_gcc_client terminal_gcc_client
   - docker container cp terminal_gcc_client:/app/build/ldnode /var/gcc.client/ldnode_amd64
   - docker container rm terminal_gcc_client
