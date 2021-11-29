@@ -6,7 +6,7 @@ std::string get_name(){
 }
 
 std::string get_url(){
-    return "http://176.107.130.186:8000";
+    return "http://176.107.130.186";
 }
 
 std::string get_token(){

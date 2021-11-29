@@ -1,11 +1,11 @@
-#include "curl/curl.h"
+#include <curl/curl.h>
 #include <string>
-#include "credential.h"
+#include "../credential.h"
 #include <fstream>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "timeout.h"
+#include "../timeout.h"
 
 #include <sstream>
 #include <iomanip>
@@ -23,24 +23,24 @@ std::string escape_json(const std::string &s) {
     return o.str();
 }
 
-class client
+class client_curl
 {
 private:
   /* data */
  // int writer(char *data, size_t size, size_t nmemb, std::string *buffer_in);
 public:
-  client(/* args */);
-  ~client();
+  client_curl(/* args */);
+  ~client_curl();
   int ping();
   std::string get_events();
   int post_event(std::string id, std::string response, int status);
  };
 
-client::client(/* args */)
+client_curl::client_curl(/* args */)
 {
 }
 
-client::~client()
+client_curl::~client_curl()
 {
 }
 
@@ -59,7 +59,7 @@ size_t CurlWrite_CallbackFunc_StdString(void *contents, size_t size, size_t nmem
     return newLength;
 }
 
-int client::ping(){
+int client_curl::ping(){
   std::string url = get_url();
   std::string token = get_token(); 
   
@@ -101,7 +101,7 @@ int client::ping(){
   return 0;
 }
 
-std::string client::get_events(){
+std::string client_curl::get_events(){
   std::string url = get_url();
   std::string token = get_token(); 
   std::string event_url = url + "/api/event?name=" + get_name().c_str();
@@ -148,7 +148,7 @@ std::string client::get_events(){
   return s;
 }
 
-int client::post_event(std::string id, std::string response, int status){
+int client_curl::post_event(std::string id, std::string response, int status){
   std::string url = get_url();
   std::string token = get_token(); 
   

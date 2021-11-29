@@ -1,6 +1,7 @@
 # Сборка ---------------------------------------
 
-FROM ubuntu:xenial as build
+# В качестве базового образа для сборки используем gcc:latest
+FROM ubuntu as build
 
 # Установим рабочую директорию для сборки GoogleTest
 WORKDIR /build
