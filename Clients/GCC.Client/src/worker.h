@@ -1,13 +1,16 @@
-#include "clients/client_curl.h"
+//#include "clients/client_curl.h"
+#include "clients/client_socket.h"
 #include "json-parser/json.c"
 #include "providers/exec_provider.h"
 #include "providers/get_provider.h"
+
 
 class worker
 {
 private:
     /* data */
-    client_curl clnt;
+    //client_curl clnt;
+    client_socket clnt;
     ExecProvider exec_prvd;
     GetProvider get_proider;
 
@@ -22,7 +25,7 @@ public:
 
 worker::worker(/* args */)
 {
-    clnt = client_curl();
+    clnt = client_socket();
     exec_prvd = ExecProvider();
     get_proider = GetProvider();
 }

@@ -10,7 +10,7 @@ std::string get_url(){
 }
 
 std::string get_token(){
-    return "Authorization: Token de301beaebea29d0395c2750c661090986ed4b98";
+    return "Token de301beaebea29d0395c2750c661090986ed4b98";
 }
 
 std::string get_version(){
