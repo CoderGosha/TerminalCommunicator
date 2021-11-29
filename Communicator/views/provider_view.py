@@ -26,13 +26,16 @@ class ProviderView(APIView):
         if not request.user.has_perm('Communicator.add_event'):
             return Response({}, status=status.HTTP_403_FORBIDDEN)
 
+        self.delete_old_task()
         serialazer = EventRequestSerializer(data=request.data)
         if serialazer.is_valid(raise_exception=True):
             terminal = self.get_terminal()
             if terminal is None:
                 return Response({'status': 'terminal not found'}, status=status.HTTP_404_NOT_FOUND)
-
-            event = serialazer.save(owner=self.request.user, terminal=terminal)
+            data_create = datetime.datetime.now()
+            data_expired = data_create + datetime.timedelta(hours=1)
+            event = serialazer.save(owner=self.request.user, terminal=terminal, data_create=data_create,
+                                    data_expired=data_expired)
             return Response({"success": "Ok", "id": event.id})
 
     '''
@@ -44,3 +47,14 @@ class ProviderView(APIView):
         timeout = timeout + datetime.timedelta(minutes=-10)
         terminals = Terminal.objects.filter(is_active=True).filter(last_connect__gte=timeout).order_by('metric').all()
         return terminals.first()
+
+    '''
+        Перенести метод в отдельный таск 
+    '''
+
+    def delete_old_task(self):
+        timeout = datetime.datetime.now()
+        events = Event.objects.filter(owner=self.request.user).filter(data_expired__lt=timeout).delete()
+
+
+

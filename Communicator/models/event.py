@@ -17,6 +17,7 @@ class Event(models.Model):
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     data_create = models.DateTimeField(default=datetime.now())
+    data_expired = models.DateTimeField(default=datetime.now(), blank=True, null=True)
     event_type = models.IntegerField(
         choices=EventType.choices,
         default=EventType.EXEC,

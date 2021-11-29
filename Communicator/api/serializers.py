@@ -49,4 +49,4 @@ class EventRequestSerializer(serializers.ModelSerializer):
         fields = ['event_type', 'request']
 
     def create(self, validated_data):
-        return Event.objects.create(**validated_data, data_create=datetime.now())
+        return Event.objects.create(**validated_data)
