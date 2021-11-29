@@ -22,4 +22,4 @@ class Terminal(models.Model):
         return self.display_name or self.name
 
     def __str__(self):
-        return f'{self.get_name()} ({self.owner.username}) - {self.last_connect or "no connect"}'
+        return f'{self.get_name()} ({self.owner.username})'

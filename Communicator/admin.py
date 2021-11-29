@@ -12,7 +12,7 @@ from django.contrib import admin
 class EventAdmin(admin.ModelAdmin):
     model = Event
     list_per_page = 10  # No of records per page
-    list_display = ('event_type', 'terminal', 'data_create', 'success')
+    list_display = ('event_type', 'terminal', 'data_create', 'data_expired', 'success')
     list_filter = ('terminal',)
     ordering = ('-data_create',)
     search_fields = ('request',)
