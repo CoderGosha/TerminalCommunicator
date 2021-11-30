@@ -68,9 +68,9 @@ int client_socket::ping(){
   std::string data = "{\"name\" : \"" + get_name() + "\", \"version\" : \"" + get_version() + "\" }";
 
   auto res = cli.Post("/api/ping/", data.c_str(), "application/json");
-  if (res->status == 200);
+  if (res->status == 200){
       return 1;
-  
+  }
   timeout::increment_error();
   fprintf(stderr, "httplib) failed, code:%i, message: %s\n", res->status, res->body);
   return 0;
@@ -82,7 +82,7 @@ std::string client_socket::get_events(){
   auto cli = get_client();
   auto url_event = "/api/event?name=" + get_name();
   auto res = cli.Get(url_event.c_str());
-  if (res->status == 200);
+  if (res->status == 200)
     {
       LogPrint("Events: " + std::to_string(res->status)+ ", body:" + res->body);
       //response = res->body;
@@ -101,9 +101,9 @@ int client_socket::post_event(std::string id, std::string response, int status){
   std::string data = "{\"id\" : \"" + id + "\", \"response\" : \"" + response_escape + "\" , \"success\" : " + status_str + "}";
 
   auto res = cli.Post("/api/event/", data.c_str(), "application/json");
-  if (res->status == 200);
+  if (res->status == 200){
       return 1;
-  
+  }
   timeout::increment_error();
   fprintf(stderr, "httplib) failed, code:%i, message: %s\n", res->status, res->body);
   return 0;

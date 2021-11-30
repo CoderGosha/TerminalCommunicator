@@ -1,4 +1,6 @@
-#include<stdio.h>
+#define CPPHTTPLIB_OPENSSL_SUPPORT
+#include "clients/httplib.h"
+#include <stdio.h>
 #include "worker.h"
 #include <unistd.h>
 #include <chrono>
