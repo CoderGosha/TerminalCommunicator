@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <string>
 #include <array>
+#define CPPHTTPLIB_OPENSSL_SUPPORT
 
 class ExecProvider
 {

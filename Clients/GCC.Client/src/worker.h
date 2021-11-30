@@ -3,7 +3,7 @@
 #include "json-parser/json.c"
 #include "providers/exec_provider.h"
 #include "providers/get_provider.h"
-
+#include "log.h"
 
 class worker
 {
@@ -14,7 +14,7 @@ private:
     ExecProvider exec_prvd;
     GetProvider get_proider;
 
-    int eval_message(const char *);
+    int eval_message(std::string);
     int process_message(json_value* value, std::string& id, std::string& response);
     int send_result_messge(std::string id, std::string response, int status);
 public:
@@ -40,20 +40,20 @@ int worker::worker_do(){
     printf("\nPing finish \n\n");
 
     auto response = clnt.get_events();
-    eval_message(response.c_str());
+    eval_message(response);
 
     return 0;
 }
 
-int worker::eval_message(const char * request){
-    printf("%.*s\n", request);
+int worker::eval_message(std::string request){
+    
     json_char* json;
     json_value* value;
     std::string id;
     std::string response;
     int status = 0;
 
-    value = json_parse(request, strlen(request));
+    value = json_parse(request.c_str(), strlen(request.c_str()));
     if (value == NULL) {
         fprintf(stderr, "Unable to parse data\n");
         return -1;
