@@ -23,7 +23,7 @@ class TerminalAdmin(admin.ModelAdmin):
     model = Terminal
     list_per_page = 10  # No of records per page
     list_display = ('name', 'owner', 'is_active', 'last_connect', 'ip_address', 'request_count' )
-    list_filter = ('owner',)
+    # list_filter = ('owner',)
     ordering = ('-last_connect',)
     search_fields = ('name',)
 
