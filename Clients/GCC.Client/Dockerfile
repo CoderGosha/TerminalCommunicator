@@ -14,7 +14,7 @@ WORKDIR /app/build
 
 RUN apt-get update && \
     apt-get install -y \
-      libcurl4-gnutls-dev gcc build-essential
+      libcurl4-gnutls-dev gcc build-essential libssl-dev
 
 RUN g++ -Wall -v ../src/app.cpp -o /app/build/ldnode -lssl -lcrypto
 
