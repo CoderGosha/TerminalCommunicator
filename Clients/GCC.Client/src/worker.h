@@ -114,7 +114,8 @@ int worker::process_message(json_value* value, std::string& id, std::string& res
                 break;
         }
     }
-
+    LogPrint("Message new:" + id);
+    
     switch (event_type)
     {
     case 0:
@@ -136,7 +137,7 @@ int worker::process_message(json_value* value, std::string& id, std::string& res
         }
 
     }
-    LogPrint("Message new:" + id);
+    
     return status;
 }
 

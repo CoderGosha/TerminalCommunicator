@@ -1,4 +1,5 @@
 #define CPPHTTPLIB_OPENSSL_SUPPORT
+#define CPPHTTPLIB_READ_TIMEOUT_SECOND 20
 #define DEBUG
 #include "clients/httplib.h"
 #include <stdio.h>
