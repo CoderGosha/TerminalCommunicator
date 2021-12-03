@@ -72,7 +72,7 @@ int client_socket::ping(){
       return 1;
   }
   timeout::increment_error();
-  fprintf(stderr, "httplib) failed, code:%i, message: %s\n", res->status, res->body);
+  LogPrint("Ping failed, code:" + std::to_string(res->status) + "message:" + res->body);
   return 0;
 }
 
@@ -89,7 +89,7 @@ std::string client_socket::get_events(){
       return res->body;
     }
   timeout::increment_error();
-  fprintf(stderr, "httplib) failed, code:%i, message: %s\n", res->status, res->body);
+  LogPrint("Get_events failed, code:" + std::to_string(res->status) + "message:" + res->body);
   return response;
 }
 
@@ -105,6 +105,6 @@ int client_socket::post_event(std::string id, std::string response, int status){
       return 1;
   }
   timeout::increment_error();
-  fprintf(stderr, "httplib) failed, code:%i, message: %s\n", res->status, res->body);
+  LogPrint("Post_events failed, code:" + std::to_string(res->status) + "message:" + res->body);
   return 0;
 }

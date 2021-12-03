@@ -55,7 +55,7 @@ int worker::eval_message(std::string request){
 
     value = json_parse(request.c_str(), strlen(request.c_str()));
     if (value == NULL) {
-        fprintf(stderr, "Unable to parse data\n");
+        LogPrint("Unable to parse data");
         return -1;
     }
     int length, x;
@@ -66,7 +66,7 @@ int worker::eval_message(std::string request){
             for (x = 0; x < length; x++) {
                 try {
                     status = process_message(value->u.array.values[x], id, response);
-                    printf("Response message id: %s\n", id.c_str());
+                    LogPrint("Response message id:" + id);
                 }
                 catch (const std::exception& e)
                 {
@@ -136,9 +136,7 @@ int worker::process_message(json_value* value, std::string& id, std::string& res
         }
 
     }
-
-    printf("Message new: %s\n", id.c_str());
-    //response = "ok";
+    LogPrint("Message new:" + id);
     return status;
 }
 

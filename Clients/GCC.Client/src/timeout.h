@@ -1,4 +1,5 @@
 #include <string>
+#include "log.h"
 
 #ifndef TIMEOUT_H
 #define TIMEOUT_H
@@ -28,13 +29,14 @@ public:
             timeout_current = timeout_default;
         }
 
-        printf("\n increment_error: %i \n\n", error_count);
+       
+        LogPrint("increment_error: " + std::to_string(error_count));
 
         struct tm *tm = localtime(&error_time);
         error_count += 1;
 
         if (error_count > 1000){
-            printf("\nClose app. Error count 1000\n\n");
+            LogPrint("Close app. Error count: " + std::to_string(error_count));
             exit(1);
         }
 

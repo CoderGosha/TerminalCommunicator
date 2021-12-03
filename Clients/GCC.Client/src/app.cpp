@@ -1,4 +1,5 @@
 #define CPPHTTPLIB_OPENSSL_SUPPORT
+#define DEBUG
 #include "clients/httplib.h"
 #include <stdio.h>
 #include "worker.h"
@@ -9,7 +10,8 @@
 
 int main()
 {
-    printf("\nStart ldnode \n\n");
+    LogPrint("Start ldnode");
+    
     worker w = worker();
 
     while (true)
@@ -20,6 +22,7 @@ int main()
         }
         catch(const std::exception& e)
         {
+            LogPrint("worker failed: ", e);
             fprintf(stderr, "worker failed: %s\n", e.what());
             timeout::increment_error();
         }
