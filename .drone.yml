@@ -32,9 +32,8 @@ steps:
 
 - name: send telegram notification
   image: appleboy/drone-telegram
+  secrets: [telegram_token]
   settings:
-    token:
-      from_secret: bot_token
     to: -1001419585850
 ---
 
@@ -59,7 +58,6 @@ steps:
 
 - name: send telegram notification
   image: appleboy/drone-telegram
+  secrets: [telegram_token]
   settings:
-    token:
-      from_secret: bot_token
     to: -1001419585850
