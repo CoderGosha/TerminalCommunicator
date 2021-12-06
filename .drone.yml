@@ -12,9 +12,6 @@ server:
   password:
     from_secret: ssh_password
 
-clone:
-  skip_verify: true
-
 steps:
 - name: build
   commands:
@@ -36,33 +33,6 @@ steps:
 ---
 
 kind: pipeline
-type: exec
-name: Terminal.Client.GCC.x64.
-
-platform:
-  os: linux
-  arch: amd64
-
-clone:
-  skip_verify: true
-
-steps:
-- name: delete old containers
-  failure: ignore
-  commands:
-  - docker stop terminal_gcc_client;
-  - docker rm terminal_gcc_client;
-  -
-- name: build
-  commands:
-  - docker build -t terminal_gcc_client . -f Clients/GCC.Client/Dockerfile ;
-  - docker container create --name terminal_gcc_client terminal_gcc_client
-  - docker container cp terminal_gcc_client:/app/build/ldnode /var/gcc.client/ldnode_amd64
-  - docker container rm terminal_gcc_client
-
----
-
-kind: pipeline
 type: ssh
 name: Terminal.Communicator
 
@@ -75,9 +45,6 @@ server:
   user: root
   password:
     from_secret: ssh_password
-
-clone:
-  skip_verify: true
 
 steps:
 - name: build and run
