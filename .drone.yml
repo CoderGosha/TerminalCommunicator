@@ -33,6 +33,8 @@ steps:
 - name: send telegram notification
   image: appleboy/drone-telegram
   secrets: [telegram_token]
+  when:
+    status: [success, failure]
   settings:
     to: -1001419585850
 ---
@@ -59,5 +61,7 @@ steps:
 - name: send telegram notification
   image: appleboy/drone-telegram
   secrets: [telegram_token]
+  when:
+    status: [success, failure]
   settings:
     to: -1001419585850
