@@ -60,8 +60,6 @@ steps:
 
 - name: send telegram notification
   image: appleboy/drone-telegram
-  secrets: [telegram_token]
+  secrets: [telegram_token, telegram_to]
   when:
     status: [success, failure]
-  settings:
-    to: -1001419585850
