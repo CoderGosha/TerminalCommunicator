@@ -36,6 +36,7 @@ steps:
   when:
     status: [success, failure]
   format: markdown
+  debug: true
   message: >
     {{#success build.status}}
     ✅ Build #{{build.number}} of `{{repo.name}}` succeeded.
