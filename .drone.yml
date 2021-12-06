@@ -32,11 +32,9 @@ steps:
 
 - name: send telegram notification
   image: appleboy/drone-telegram
-  secrets: [telegram_token]
+  secrets: [plugin_token, plugin_to]
   when:
     status: [success, failure]
-  settings:
-    to: -1001419585850
 ---
 
 kind: pipeline
@@ -60,6 +58,6 @@ steps:
 
 - name: send telegram notification
   image: appleboy/drone-telegram
-  secrets: [telegram_token, telegram_to]
+  secrets: [plugin_token, plugin_to]
   when:
     status: [success, failure]
