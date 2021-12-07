@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from Communicator.api.serializers import EventRequestSerializer, EventResultSerializer
+from Communicator.api.serializers import EventRequestSerializer, EventResultSerializer, EventResultStatusSerializer
 from Communicator.models import Terminal, Event
 
 
@@ -18,6 +18,7 @@ class ProviderView(APIView):
     def get(self, request):
         id = self.request.query_params.get('id')
         long = self.request.query_params.get('long')
+
         if id is None:
             return Response(f"Invalid id", status.HTTP_400_BAD_REQUEST)
 
@@ -76,4 +77,15 @@ class ProviderView(APIView):
         events = Event.objects.filter(owner=self.request.user).filter(data_expired__lt=timeout).delete()
 
 
+class ProviderStatusView(APIView):
+    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+    '''
+        Метод для проверки только статусов 
+    '''
+    def get(self, request):
 
+        event = Event.objects.filter(owner=self.request.user).all()
+
+        serializer = EventResultStatusSerializer(event, many=True)
+        return Response(serializer.data)

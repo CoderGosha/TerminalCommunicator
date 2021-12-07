@@ -50,3 +50,9 @@ class EventRequestSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         return Event.objects.create(**validated_data)
+
+
+class EventResultStatusSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Event
+        fields = ['id', 'success']

@@ -1,7 +1,13 @@
 ###
-GET http://localhost:8000/api/provider?id=ee97ccf9-befa-496f-825d-769afac4d6b6&long=True
+GET http://localhost:8000/api/provider?id=ee97ccf9-befa-496f-825d-769afac4d6b6
 Accept: application/json
 Authorization: Token {{token}}
+
+###
+GET http://localhost:8000/api/provider/all
+Accept: application/json
+Authorization: Token {{token}}
+
 
 ###
 

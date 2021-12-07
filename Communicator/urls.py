@@ -1,6 +1,6 @@
 from django.urls import path
 
-from Communicator.views import PingView, TokenView, EventView, ProviderView
+from Communicator.views import PingView, TokenView, EventView, ProviderView, ProviderStatusView
 
 app_name = "Communicator"
 
@@ -10,4 +10,5 @@ urlpatterns = [
     path('token/', TokenView.as_view()),
     path('event/', EventView.as_view()),
     path('provider/', ProviderView.as_view()),
+    path('provider/all/', ProviderStatusView.as_view()),
 ]

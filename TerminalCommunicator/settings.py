@@ -159,7 +159,8 @@ SWAGGER_SETTINGS = {
         'post',
         'put',
         'patch',
-        'delete'
+        'delete',
+        'head'
     ],
     "api_key": '',  # An API key
     "is_authenticated": False,  # Set to True to enforce user authentication,

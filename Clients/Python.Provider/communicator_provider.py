@@ -25,7 +25,7 @@ class CommunicatorProvider:
         while datetime.datetime.now() < timeout:
             result_command = requests.get(self.api_url + "api/provider",
                                           headers={'Authorization': f'Token {self.api_key}'},
-                                          params={"id": event_id})
+                                          params={"id": event_id, "long": True})
             if result_command.status_code == 200:
                 response = result_command.json()
                 if response['success'] is None:
