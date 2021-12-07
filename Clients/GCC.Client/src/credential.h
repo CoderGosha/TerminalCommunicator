@@ -20,5 +20,5 @@ std::string get_version(){
 }
 
 int read_timeout_milliseconds(){
-    return 50;
+    return 0;
 }

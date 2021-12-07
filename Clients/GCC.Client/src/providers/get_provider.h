@@ -30,20 +30,16 @@ int GetProvider::exec(std::string& id, std::string request, std::string& respons
         });
     cli.set_follow_location(true);
     LogPrint("Get request: " + request);
-    //auto res = cli.Get(params.c_str());
-    //std::string body;
     auto res = cli.Get(params.c_str(),
         [&](const char *data, size_t data_length) {
             response.append(data, data_length);
-            //LogPrint("Append request len: " + std::to_string(data_length));
-            std::this_thread::sleep_for(std::chrono::milliseconds(read_timeout_milliseconds()));
             return true;
         });
-    if (res->status == 200){
+    LogPrint("Response len:" + std::to_string(response.length()));
+    if (res != nullptr && response.length() != 0 && res->status == 200)
         status = 1;
-    }
+
     LogPrint("Response status: " + std::to_string(res->status));
-    //response =  res->body;
     return status;
 }
 

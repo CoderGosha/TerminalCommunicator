@@ -81,6 +81,7 @@ int worker::eval_message(std::string request){
         default:
             break;
     }
+    response = "";
     return 0;
 }
 
