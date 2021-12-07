@@ -1,4 +1,5 @@
 import datetime
+import time
 
 from rest_framework import status
 from rest_framework.authentication import TokenAuthentication, SessionAuthentication
@@ -16,11 +17,29 @@ class ProviderView(APIView):
 
     def get(self, request):
         id = self.request.query_params.get('id')
+        long = self.request.query_params.get('long')
         if id is None:
             return Response(f"Invalid id", status.HTTP_400_BAD_REQUEST)
+
         event = Event.objects.filter(owner=self.request.user).filter(id=id).first()
-        serializer = EventResultSerializer(event)
-        return Response(serializer.data)
+
+        if event is None:
+            return Response(f"Event not found", status.HTTP_404_NOT_FOUND)
+
+        if long is None:
+            serializer = EventResultSerializer(event)
+            return Response(serializer.data)
+        else:
+            # Простейшая реализация лонг пулинга
+            for i in range(60):  # e.g. reopen connection every 60 seconds
+                if event.success is not None:
+                    serializer = EventResultSerializer(event)
+                    return Response(serializer.data)
+                time.sleep(1)
+                event = Event.objects.filter(owner=self.request.user).filter(id=id).first()
+
+            serializer = EventResultSerializer(event)
+            return Response(serializer.data)
 
     def post(self, request):
         if not request.user.has_perm('Communicator.add_event'):

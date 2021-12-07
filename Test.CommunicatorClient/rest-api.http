@@ -1,5 +1,5 @@
 ###
-GET http://localhost:8000/api/provider?id=6553e3eb-6e25-4647-8411-2563656a2a9c
+GET http://localhost:8000/api/provider?id=ee97ccf9-befa-496f-825d-769afac4d6b6&long=True
 Accept: application/json
 Authorization: Token {{token}}
 
