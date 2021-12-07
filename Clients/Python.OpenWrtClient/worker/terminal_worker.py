@@ -70,7 +70,7 @@ class TerminalWorker:
 
     def get_event(self):
         result = requests.get(self.api_url + "api/event", headers={'Authorization': f'Token {self.api_key}'},
-                              params={"name": self.name})
+                              params={"name": self.name, "long": True})
         if result.status_code == 200:
             return result.json()
         else:
