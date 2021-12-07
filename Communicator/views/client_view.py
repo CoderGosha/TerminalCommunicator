@@ -1,3 +1,5 @@
+import time
+
 from django.shortcuts import render
 
 # Create your views here.
@@ -43,15 +45,30 @@ class EventView(APIView):
 
     def get(self, request):
         name = self.request.query_params.get('name')
+        long = self.request.query_params.get('long')
+        events = []
         if name is None:
             return Response(f"Invalid name", status.HTTP_400_BAD_REQUEST)
         terminal = Terminal.objects.filter(name=name).filter(owner=self.request.user).first()
         if terminal is None:
             return Response(f"Terminal not found", status.HTTP_404_NOT_FOUND)
+        if long is None:
+            if self.is_events(terminal.id):
+                events = self.get_events(terminal.id)
 
-        events = Event.objects.filter(terminal__id=terminal.id).filter(success__isnull=True).order_by('data_create').all()
-        serializer = EventItemSerializer(events, many=True)
-        return Response(serializer.data)
+            serializer = EventItemSerializer(events, many=True)
+            return Response(serializer.data)
+
+        else:
+            # Простейшая реализация лонг пулинга
+            for i in range(60):  # e.g. reopen connection every 60 seconds
+                if self.is_events(terminal.id):
+                    events = self.get_events(terminal.id)
+                    serializer = EventItemSerializer(events, many=True)
+                    return Response(serializer.data)
+                time.sleep(1)
+            serializer = EventItemSerializer(events, many=True)
+            return Response(serializer.data)
 
     def post(self, request):
         if "id" not in self.request.data:
@@ -74,5 +91,12 @@ class EventView(APIView):
 
             return Response({"success": "Ok"})
         return Response(serialazer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def is_events(self, id):
+        return Event.objects.filter(terminal__id=id).filter(success__isnull=True).count() > 0
+
+    def get_events(self, id):
+        return Event.objects.filter(terminal__id=id).filter(success__isnull=True).order_by(
+            'data_create').all()
 
 
