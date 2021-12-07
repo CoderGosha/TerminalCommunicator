@@ -4,3 +4,4 @@ django-rest-swagger
 pyYaml
 gunicorn
 psycopg2
+pytz
