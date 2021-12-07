@@ -36,8 +36,15 @@ int GetProvider::exec(std::string& id, std::string request, std::string& respons
             return true;
         });
     LogPrint("Response len:" + std::to_string(response.length()));
-    if (res != nullptr && response.length() != 0 && res->status == 200)
-        status = 1;
+    if (response.length() == 0)
+    {
+        response = "Content is null";
+        return 0;
+    }
+
+    if (res != nullptr && response.length() != 0)
+        if (res->status == 200)
+            status = 1;
 
     LogPrint("Response status: " + std::to_string(res->status));
     return status;
