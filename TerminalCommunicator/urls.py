@@ -13,7 +13,6 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.conf.urls import url
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
@@ -27,7 +26,7 @@ schema_view = get_swagger_view(title='TerminalCommunicator')
 
 
 urlpatterns = [
-    url(r'^$', TemplateView.as_view(
+    path('swaggerapi/', TemplateView.as_view(
         template_name='swagger-ui.html',
         extra_context={'schema_url': 'openapi-schema'}
     ), name='openapi-schema'),
@@ -39,6 +38,5 @@ urlpatterns = [
     ), name='openapi-schema'),
     path('api/', include('Communicator.urls')),
     path('admin/', admin.site.urls),
-    # url(r'^$', schema_view),
-    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+
 ]
