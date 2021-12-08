@@ -1,4 +1,4 @@
-FROM python:3.9 AS runtime
+FROM python:3 AS runtime
 WORKDIR /app
 COPY . .
 RUN dir /app
