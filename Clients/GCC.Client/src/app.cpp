@@ -1,7 +1,6 @@
 #define CPPHTTPLIB_OPENSSL_SUPPORT
-#define CPPHTTPLIB_READ_TIMEOUT_SECOND 20
+#define CPPHTTPLIB_READ_TIMEOUT_SECOND 120
 #define CPPHTTPLIB_RECV_BUFSIZ size_t(32096u)
-#define CPPHTTPLIB_COMPRESSION_BUFSIZ size_t(4098u)
 #define DEBUG
 #include "clients/httplib.h"
 #include <stdio.h>

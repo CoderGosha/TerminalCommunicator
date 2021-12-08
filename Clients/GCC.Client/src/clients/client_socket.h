@@ -80,7 +80,7 @@ std::string client_socket::get_events(){
   LogPrint("Check events");
   std::string response = "[]";
   auto cli = get_client();
-  auto url_event = "/api/event?name=" + get_name();
+  auto url_event = "/api/event?name=" + get_name() + "&long=true";
   auto res = cli.Get(url_event.c_str());
   if (res->status == 200)
     {
