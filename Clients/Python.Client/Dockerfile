@@ -1,4 +1,6 @@
 FROM python:3 AS runtime
+RUN apt-get install bash
+
 WORKDIR /app
 COPY Clients/Python.Client /app
 RUN dir /app
