@@ -1,4 +1,4 @@
-FROM python:3.9 AS runtime
+FROM python AS runtime
 RUN apt-get install bash
 
 WORKDIR /app
