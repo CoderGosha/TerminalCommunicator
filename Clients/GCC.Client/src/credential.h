@@ -3,7 +3,7 @@
 
 std::string get_name(){
     //return "GCC.Client";
-    return "CG.Router.GCC";
+    return "CG.Raspberry.GCC";
 }
 
 std::string get_url(){
