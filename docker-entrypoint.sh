@@ -11,8 +11,22 @@ then
     echo "PostgreSQL started"
 fi
 
+FILE=/db/db.sqlite3
+
+if [[ -f "$FILE" ]]; then
+    echo "$FILE exists."
+else
+    echo "$FILE does not exist."
+    python3 manage.py migrate
+    python3 manage.py migrate Communicator
+    DJANGO_SUPERUSER_PASSWORD=admin python3 manage.py createsuperuser \
+    --no-input \
+    --username=admin \
+    --email=admin@domain.com
+fi
+
 # python manage.py flush --no-input
-python manage.py migrate
+# python manage.py migrate
 
 python manage.py collectstatic --no-input
 # python3 manage.py migrate Communicator
