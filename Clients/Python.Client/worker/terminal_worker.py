@@ -4,7 +4,7 @@ import os
 # import threading
 import time
 import requests
-
+import pyuser_agent
 
 class TerminalWorker:
     def __init__(self, api_url, api_key, name):
@@ -109,7 +109,12 @@ class TerminalWorker:
             logging.info(msg)
 
     def processing_event_get(self, request) -> (str, bool):
-        result = requests.get(request)
+        ua = pyuser_agent.UA()
+
+        headers = {
+            "User-Agent": ua.random
+        }
+        result = requests.get(request, headers=headers)
         if result.status_code == 200:
             return result.content.decode(), True
         else:

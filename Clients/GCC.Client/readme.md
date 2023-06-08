@@ -25,6 +25,8 @@ After=multi-user.target
 [Service]
 Type=idle
 ExecStart=/home/pi/ldnode
+Restart=always
+RestartSec=3
 
 [Install]
 WantedBy=multi-user.target
@@ -39,3 +41,5 @@ brew install openssl
 export LDFLAGS="-L/opt/local/lib"
 export CPPFLAGS="-I/opt/local/include/openssl"
 g++ -Wall -v src/app.cpp -o ldnode -lssl -lcrypto
+
+-DOPENSSL_ROOT_DIR=/opt/homebrew/Cellar/openssl@3/3.0.5/ -DOPENSSL_CRYPTO_LIBRARY=/opt/homebrew/Cellar/openssl@3/3.0.5/lib/

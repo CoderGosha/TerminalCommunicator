@@ -1,5 +1,5 @@
 # Terminal Communicator 
-
+Распределенная система запросов, клиенты в том числе для роутеров
 
 ### Run python client with docker 
 
